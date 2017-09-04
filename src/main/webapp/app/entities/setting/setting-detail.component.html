@@ -1,0 +1,33 @@
+
+<div *ngIf="setting">
+    <h2><span jhiTranslate="twpointsApp.setting.detail.title">Setting</span> {{setting.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="twpointsApp.setting.weeklyGoal">Weekly Goal</span></dt>
+        <dd>
+            <span>{{setting.weeklyGoal}}</span>
+        </dd>
+        <dt><span jhiTranslate="twpointsApp.setting.weightUnits">Weight Units</span></dt>
+        <dd>
+            <span jhiTranslate="{{'twpointsApp.Units.' + setting.weightUnits}}">{{setting.weightUnits}}</span>
+        </dd>
+        <dt><span jhiTranslate="twpointsApp.setting.settingUser">Setting User</span></dt>
+        <dd>
+            {{setting.settingUser?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'setting/'+ setting.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

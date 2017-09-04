@@ -1,0 +1,62 @@
+<div>
+    <h2>
+        <span jhiTranslate="twpointsApp.setting.home.title">Settings</span>
+        <button class="btn btn-primary float-right jh-create-entity create-setting" [routerLink]="['/', { outlets: { popup: ['setting-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="twpointsApp.setting.home.createLabel">
+            Create new Setting
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="settings">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="weeklyGoal"><span jhiTranslate="twpointsApp.setting.weeklyGoal">Weekly Goal</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="weightUnits"><span jhiTranslate="twpointsApp.setting.weightUnits">Weight Units</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="settingUser.login"><span jhiTranslate="twpointsApp.setting.settingUser">Setting User</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let setting of settings ;trackBy: trackId">
+                <td><a [routerLink]="['../setting', setting.id ]">{{setting.id}}</a></td>
+                <td>{{setting.weeklyGoal}}</td>
+                <td jhiTranslate="{{'twpointsApp.Units.' + setting.weightUnits}}">{{setting.weightUnits}}</td>
+                <td>
+                    {{setting.settingUser?.login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../setting', setting.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'setting/'+ setting.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'setting/'+ setting.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
